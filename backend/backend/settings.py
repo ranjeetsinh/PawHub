@@ -47,6 +47,10 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1), 
 }
 
+GDAL_LIBRARY_PATH = r'C:/Users/admin/Desktop/Pawhub/Pawhub/myenv/Lib/site-packages/osgeo/gdal.dll'
+
+GEOS_LIBRARY_PATH = r'C:/Users/admin/Desktop/Pawhub/Pawhub/myenv/Lib/site-packages/osgeo/geos_c.dll'
+
 
 
 
@@ -62,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     "rest_framework",
+    'rest_framework_gis',
     "corsheaders"
 ]
 
@@ -102,8 +107,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'pawhub',
+        'USER' : 'ranjeet',
+        'PASSWORD' : 'Ranjeet#24',
+        'HOST' : 'pawhub2.cdemm4ewq3fx.ap-south-1.rds.amazonaws.com',
+        'PORT' : '5432',
     }
 }
 
@@ -148,3 +157,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_CREDENTIALS = True
