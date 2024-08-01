@@ -1,10 +1,13 @@
 # api/urls.py
 
-from django.urls import path
-from .views import UserDetailView, StrayListCreateView, StrayDetailView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import UserDetailView, StrayViewSet
+
+router = DefaultRouter()
+router.register(r'strays', StrayViewSet)
 
 urlpatterns = [
     path('user/', UserDetailView.as_view(), name='user-detail'),
-    path('strays/', StrayListCreateView.as_view(), name='stray-list-create'),
-    path('strays/<int:pk>/', StrayDetailView.as_view(), name='stray-detail'),
+    path('', include(router.urls)),
 ]

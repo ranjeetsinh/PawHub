@@ -5,6 +5,7 @@ from .serializers import UserSerializer, StraySerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from .permissions import IsOwnerOrReadOnly
 from .models import Stray
+from rest_framework import viewsets
 
 class UserDetailView(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
@@ -15,15 +16,10 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
         return self.request.user
     
 
-class StrayListCreateView(generics.ListCreateAPIView):
+class StrayViewSet(viewsets.ModelViewSet):
     queryset = Stray.objects.all()
     serializer_class = StraySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(reported_by=self.request.user)
-
-class StrayDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Stray.objects.all()
-    serializer_class = StraySerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]

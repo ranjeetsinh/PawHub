@@ -35,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-     # Added related_name attributes
+    # Added related_name attributes
     groups = models.ManyToManyField(Group, related_name='api_users')
     user_permissions = models.ManyToManyField(Permission, related_name='api_users')
 
@@ -49,20 +49,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Stray(models.Model):
-    SPECIES_CHOICES = [
+    STRAY_TYPES = (
         ('puppy', 'Puppy'),
         ('kitten', 'Kitten'),
-    ]
+    )
 
-    species = models.CharField(max_length=10, choices=SPECIES_CHOICES)
-    name = models.CharField(max_length=30, blank=True, null=True)
-    age = models.PositiveIntegerField()
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=255, null=True, blank=True, default= None)
+    type = models.CharField(max_length=10, choices=STRAY_TYPES)
+    description = models.TextField(blank=True, null=True, default=None)
     location = geomodels.PointField()
     photo = models.ImageField(upload_to='stray_photos/', blank=True, null=True)
-    reported_by = models.ForeignKey(User, on_delete=models.CASCADE)
     is_adopted = models.BooleanField(default=False)
-    date_reported = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.name} ({self.species})"
+        return f"{self.name} ({self.type})"

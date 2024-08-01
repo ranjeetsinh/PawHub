@@ -14,4 +14,4 @@ class StraySerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Stray
         geo_field = "location"
-        fields = ('id', 'species', 'name', 'age', 'description', 'location', 'photo', 'reported_by', 'is_adopted', 'date_reported')
+        fields = ('id', 'name', 'type', 'description', 'location', 'photo', 'is_adopted', 'created_at', 'updated_at')
